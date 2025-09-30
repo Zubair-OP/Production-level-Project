@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "A complete Production level Project With backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "js backend"
+    "dev": "nodemon src/index.js"
   },
   "author": "M ZUBAIR",
   "license": "ISC"
