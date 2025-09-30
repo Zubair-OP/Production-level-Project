@@ -1,0 +1,11 @@
+{
+  "name": "production-level-project",
+  "version": "1.0.0",
+  "description": "A complete Production level Project With backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "js backend"
+  },
+  "author": "M ZUBAIR",
+  "license": "ISC"
+}
