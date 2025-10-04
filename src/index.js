@@ -1,10 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({
-    path: './.env'
-});
-import express from 'express';
-import mongoose from 'mongoose';
-import { DB_NAME } from './constants.js';
+dotenv.config();
 import MONGO_DB from './db/index.js';
 import app from './app.js';
 
