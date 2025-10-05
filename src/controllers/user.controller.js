@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import uploadToCloudinary from "../utils/cloudinary.js";
+import {uploadToCloudinary,deleteFromCloudinary} from "../utils/cloudinary.js";
 import ApiResponse from "../utils/apiresponse.js";
 import jwt from "jsonwebtoken";
 
@@ -220,7 +220,7 @@ const ChangeUserPassword = asyncHandler(async (req, res) => {
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
 
-  res.status(200).json(200, {}, "password is Updated Successfully");
+  res.status(200).json(new ApiResponse(200, {}, "password is Updated Successfully"));
 });
 
 const getcurrentUser = asyncHandler(async (req, res) => {
@@ -278,6 +278,10 @@ const UpdateCoverImage = asyncHandler(async(req,res)=>{
         new : true
       }
     ).select('-password')
+
+     if (user.coverImage?.public_id) {
+    await deleteFromCloudinary(user.coverImage.public_id);
+  }
   
     return res
     .status(200)
@@ -311,10 +315,14 @@ const UpdateAvatar = asyncHandler(async(req,res)=>{
         new : true
       }
     ).select('-password')
+
+    if (user.avatar?.public_id) {
+    await deleteFromCloudinary(user.avatar.public_id);
+  }
   
     return res
-    .status(200)
-    .json( new ApiResponse(200, user , 'user avatar is Updated'))
+      .status(200)
+      .json(new ApiResponse(200, user, 'user avatar is Updated'))
   } catch (error) {
     throw new ApiError(500, "Internal server error while updating avatar");
   }
