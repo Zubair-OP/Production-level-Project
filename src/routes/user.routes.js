@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { loginUser, registerUser, logoutUser } from '../controllers/user.controller.js';
+import { loginUser, registerUser, logoutUser, ChangeUserPassword,getcurrentUser, UpdateProfile } from '../controllers/user.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyUser } from '../middlewares/auth.middleware.js';
 import { RefreshAccessToken } from '../controllers/user.controller.js';
@@ -18,6 +18,20 @@ router.route('/login').post(loginUser);
 
 router.route('/logout').post(verifyUser, logoutUser);
 
-router.route('/refresh-token').post(RefreshAccessToken)
+router.route('/refresh-token').post(RefreshAccessToken);
+
+router.route('/changePassword').post(verifyUser,ChangeUserPassword);
+
+router.route('/getcurrentUser').get(verifyUser,getcurrentUser);
+
+router.route('/UpdateProfile').patch(verifyUser,UpdateProfile);
+
+router.route('/UpdateAvatar').patch(verifyUser,upload.single('avatar'),UpdateProfile);
+
+router.route('/UpdateCoverImage').patch(verifyUser,upload.single('coverImage'),UpdateCoverImage);
+
+router.route('/c/:username').get(verifyUser,getUserProfileDetails);
+
+router.route('/history').get(verifyUser,getWatchHistory);
 
 export default router;
